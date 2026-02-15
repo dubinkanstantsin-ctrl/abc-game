@@ -1,58 +1,51 @@
 /* ===== CSS Variables ===== */
 :root {
-    /* Colors - Dark theme with teal/gold accents */
     --bg-primary: #0f1419;
     --bg-secondary: #1a2332;
     --bg-card: #1e2a3a;
     --bg-card-hover: #243447;
-    
+
     --text-primary: #e7e9ea;
     --text-secondary: #8b98a5;
     --text-muted: #6e7681;
-    
+
     --accent-primary: #14b8a6;
     --accent-secondary: #0d9488;
     --accent-gold: #f59e0b;
     --accent-gold-dark: #d97706;
-    
+
     --success: #10b981;
     --warning: #f59e0b;
     --error: #ef4444;
-    
-    /* Category colors */
+
     --category-a: #10b981;
     --category-b: #3b82f6;
     --category-c: #f59e0b;
     --category-d: #ef4444;
-    
-    /* Spacing */
+
     --space-xs: 4px;
     --space-sm: 8px;
     --space-md: 16px;
     --space-lg: 24px;
     --space-xl: 32px;
     --space-2xl: 48px;
-    
-    /* Typography */
+
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-size-sm: 0.875rem;
     --font-size-base: 1rem;
     --font-size-lg: 1.125rem;
     --font-size-xl: 1.5rem;
     --font-size-2xl: 2rem;
-    
-    /* Borders */
+
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
     --radius-xl: 24px;
-    
-    /* Shadows */
+
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-    
-    /* Transitions */
+
     --transition-fast: 150ms ease;
     --transition-base: 250ms ease;
     --transition-slow: 400ms ease;
@@ -103,7 +96,7 @@ body {
 .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--accent-primary), var(--accent-gold));
-    width: 20%;
+    width: 10%;
     transition: width var(--transition-slow);
     border-radius: 2px;
 }
@@ -273,6 +266,105 @@ body {
     color: var(--text-primary);
 }
 
+/* ===== Direction Cards ===== */
+.direction-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+}
+
+.direction-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    background: var(--bg-secondary);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-align: center;
+    font-family: inherit;
+    color: var(--text-primary);
+    position: relative;
+}
+
+.direction-card:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(20, 184, 166, 0.2);
+}
+
+.direction-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-xs);
+}
+
+.direction-card h3 {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--accent-primary);
+}
+
+.direction-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.direction-desc {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.direction-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(20, 184, 166, 0.15);
+    color: var(--accent-primary);
+    margin-top: var(--space-xs);
+}
+
+.direction-tag.tag-new {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--accent-gold);
+}
+
+/* ===== Direction Badge (Result) ===== */
+.direction-badge-result {
+    text-align: center;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    margin: 0 auto var(--space-md);
+    width: auto;
+}
+
+/* Center the badge */
+.card > .direction-badge-result {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.direction-badge-result.dir-b2c {
+    background: rgba(20, 184, 166, 0.15);
+    color: var(--accent-primary);
+}
+
+.direction-badge-result.dir-b2b {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--category-b);
+}
+
 /* ===== Formula Box ===== */
 .formula-box {
     background: var(--bg-secondary);
@@ -355,6 +447,8 @@ body {
     text-align: left;
     font-family: inherit;
     color: var(--text-secondary);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
 }
 
 .option:hover {
@@ -555,20 +649,28 @@ body {
     .card {
         padding: var(--space-lg);
     }
-    
+
     .card-title {
         font-size: var(--font-size-xl);
     }
-    
+
     .button-group {
         flex-direction: column;
     }
-    
+
     .btn {
         width: 100%;
     }
-    
+
     .option {
         padding: var(--space-sm) var(--space-md);
+    }
+
+    .direction-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .direction-card {
+        padding: var(--space-md);
     }
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Master of ABC: Метод Хишигата</title>
+    <meta name="description" content="Интерактивная обучающая игра по ABC-классификации клиентов. Метод Хишигата для B2B и B2C продаж.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,7 +16,7 @@
         <div class="progress-bar">
             <div class="progress-fill" id="progress-fill"></div>
         </div>
-        <div class="progress-text" id="progress-text">Шаг 1 из 5</div>
+        <div class="progress-text" id="progress-text">Шаг 1 из 6</div>
 
         <!-- Phase 1: Hook -->
         <div class="phase active" id="phase-1">
@@ -34,8 +35,35 @@
                 <div class="divider"></div>
                 <p class="card-question">Хотите узнать, как превратить интуицию в систему и перестать терять время на «пустых» клиентов?</p>
                 <div class="button-group">
-                    <button class="btn btn-primary" onclick="game.startGame()">Да, хочу</button>
-                    <button class="btn btn-secondary" onclick="game.exitGame()">Нет</button>
+                    <button class="btn btn-primary" id="btn-start" onclick="game.startGame()">Да, хочу</button>
+                    <button class="btn btn-secondary" id="btn-exit" onclick="game.exitGame()">Нет</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 1.5: Direction Choice (B2B / B2C) -->
+        <div class="phase" id="phase-direction">
+            <div class="card">
+                <div class="card-icon">🧭</div>
+                <h1 class="card-title">Выберите направление</h1>
+                <p class="card-text">
+                    ABC-классификация работает и в B2B, и в B2C. Но критерии оценки — разные. Выберите, какой кейс хотите пройти:
+                </p>
+                <div class="direction-cards">
+                    <button class="direction-card" id="dir-b2c" onclick="game.selectDirection('b2c')">
+                        <div class="direction-icon">🚪</div>
+                        <h3>B2C</h3>
+                        <p class="direction-label">Бизнес → Конечному клиенту</p>
+                        <p class="direction-desc">Кейс: Межкомнатные двери через дизайнеров</p>
+                        <span class="direction-tag">Оригинальный кейс</span>
+                    </button>
+                    <button class="direction-card" id="dir-b2b" onclick="game.selectDirection('b2b')">
+                        <div class="direction-icon">🏢</div>
+                        <h3>B2B</h3>
+                        <p class="direction-label">Бизнес → Бизнесу</p>
+                        <p class="direction-desc">Кейс: IT-аутсорсинг для корпоративных клиентов</p>
+                        <span class="direction-tag tag-new">Новый кейс</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -61,95 +89,20 @@
                         <li>Чем ближе ответ к «перспективному», тем выше балл</li>
                     </ul>
                 </div>
-                <button class="btn btn-primary" onclick="game.showQuestions()">Начать симуляцию →</button>
+                <button class="btn btn-primary" id="btn-simulate" onclick="game.showQuestions()">Начать симуляцию →</button>
             </div>
         </div>
 
-        <!-- Phase 3: Simulation -->
+        <!-- Phase 3: Simulation (questions are rendered by JS) -->
         <div class="phase" id="phase-3">
             <div class="card">
-                <div class="card-icon">🚪</div>
-                <h2 class="card-subtitle">Кейс: Межкомнатные двери</h2>
-                <p class="card-text context">
+                <div class="card-icon" id="simulation-icon">🚪</div>
+                <h2 class="card-subtitle" id="simulation-title">Кейс: Межкомнатные двери</h2>
+                <p class="card-text context" id="simulation-context">
                     Вы продаёте межкомнатные двери через дизайнеров. Давайте оценим потенциального партнёра.
                 </p>
-
-                <!-- Question 1 -->
-                <div class="question-block" id="question-1">
-                    <div class="question-header">
-                        <span class="question-number">Вопрос 1 / 3</span>
-                    </div>
-                    <p class="question-text">В работе с заказчиками какая сторона принимает окончательное решение по выбору поставщика?</p>
-                    <div class="options">
-                        <button class="option" onclick="game.answer(1, 'A', 8)">
-                            <span class="option-letter">A</span>
-                            <span class="option-text">Я рекомендую бренд и конкретного поставщика, и заказчики чаще всего пользуются рекомендацией</span>
-                        </button>
-                        <button class="option" onclick="game.answer(1, 'B', 6)">
-                            <span class="option-letter">B</span>
-                            <span class="option-text">Я рекомендую бренд и поставщика, но окончательный выбор за заказчиком</span>
-                        </button>
-                        <button class="option" onclick="game.answer(1, 'C', 4)">
-                            <span class="option-letter">C</span>
-                            <span class="option-text">Я рекомендую только бренд, а поставщика выбирает заказчик</span>
-                        </button>
-                        <button class="option" onclick="game.answer(1, 'D', 2)">
-                            <span class="option-letter">D</span>
-                            <span class="option-text">Бренд дверей и поставщика выбирает заказчик</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Question 2 -->
-                <div class="question-block hidden" id="question-2">
-                    <div class="question-header">
-                        <span class="question-number">Вопрос 2 / 3</span>
-                    </div>
-                    <p class="question-text">Как часто в работе с заказчиками вы приобретаете межкомнатные двери?</p>
-                    <div class="options">
-                        <button class="option" onclick="game.answer(2, 'A', 8)">
-                            <span class="option-letter">A</span>
-                            <span class="option-text">2 и более раза в 3 месяца</span>
-                        </button>
-                        <button class="option" onclick="game.answer(2, 'B', 6)">
-                            <span class="option-letter">B</span>
-                            <span class="option-text">1 раз в 3 месяца</span>
-                        </button>
-                        <button class="option" onclick="game.answer(2, 'C', 4)">
-                            <span class="option-letter">C</span>
-                            <span class="option-text">1 раз в 3-6 месяцев</span>
-                        </button>
-                        <button class="option" onclick="game.answer(2, 'D', 2)">
-                            <span class="option-letter">D</span>
-                            <span class="option-text">Реже 1 раза в 6 месяцев</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Question 3 -->
-                <div class="question-block hidden" id="question-3">
-                    <div class="question-header">
-                        <span class="question-number">Вопрос 3 / 3</span>
-                    </div>
-                    <p class="question-text">Какой средний чек на покупку межкомнатных дверей у ваших заказчиков?</p>
-                    <div class="options">
-                        <button class="option" onclick="game.answer(3, 'A', 8)">
-                            <span class="option-letter">A</span>
-                            <span class="option-text">Более 250 тыс.</span>
-                        </button>
-                        <button class="option" onclick="game.answer(3, 'B', 6)">
-                            <span class="option-letter">B</span>
-                            <span class="option-text">От 150 до 250 тыс.</span>
-                        </button>
-                        <button class="option" onclick="game.answer(3, 'C', 4)">
-                            <span class="option-letter">C</span>
-                            <span class="option-text">От 80 до 150 тыс.</span>
-                        </button>
-                        <button class="option" onclick="game.answer(3, 'D', 2)">
-                            <span class="option-letter">D</span>
-                            <span class="option-text">До 80 тыс.</span>
-                        </button>
-                    </div>
+                <div id="questions-container">
+                    <!-- Questions rendered dynamically by JS -->
                 </div>
             </div>
         </div>
@@ -159,10 +112,11 @@
             <div class="card">
                 <div class="result-icon" id="result-icon">🏆</div>
                 <h1 class="card-title">Результат оценки</h1>
+                <div class="direction-badge-result" id="direction-badge-result"></div>
                 <div class="score-display">
                     <span class="score-label">Набрано баллов:</span>
                     <span class="score-value" id="total-score">0</span>
-                    <span class="score-max">/ 24</span>
+                    <span class="score-max" id="score-max">/ 24</span>
                 </div>
                 <div class="category-display" id="category-display">
                     <!-- Filled by JS -->
@@ -177,7 +131,10 @@
                         <li><strong>Клиенты D</strong> обрабатываются быстро или удаляются</li>
                     </ul>
                 </div>
-                <button class="btn btn-primary" onclick="game.showCTA()">Узнать больше →</button>
+                <div class="button-group">
+                    <button class="btn btn-primary" id="btn-cta" onclick="game.showCTA()">Узнать больше →</button>
+                    <button class="btn btn-secondary" id="btn-other-dir" onclick="game.playOtherDirection()">Пройти другой кейс</button>
+                </div>
             </div>
         </div>
 
@@ -196,16 +153,16 @@
                     </div>
                 </div>
                 <div class="contact-links">
-                    <a href="https://t.me/Hishigata_atelier" target="_blank" class="contact-link telegram">
+                    <a href="https://t.me/Hishigata_atelier" target="_blank" class="contact-link telegram" id="link-telegram">
                         <span class="contact-icon">✈️</span>
                         <span>@Hishigata_atelier</span>
                     </a>
-                    <a href="https://Hishigata.ru" target="_blank" class="contact-link website">
+                    <a href="https://Hishigata.ru" target="_blank" class="contact-link website" id="link-website">
                         <span class="contact-icon">🌐</span>
                         <span>Hishigata.ru</span>
                     </a>
                 </div>
-                <button class="btn btn-secondary" onclick="game.restart()">Пройти заново</button>
+                <button class="btn btn-secondary" id="btn-restart" onclick="game.restart()">Пройти заново</button>
             </div>
         </div>
 
@@ -217,7 +174,7 @@
                 <p class="card-text">
                     Когда будете готовы систематизировать продажи — возвращайтесь.
                 </p>
-                <button class="btn btn-primary" onclick="game.restart()">Начать заново</button>
+                <button class="btn btn-primary" id="btn-restart-exit" onclick="game.restart()">Начать заново</button>
             </div>
         </div>
     </div>
